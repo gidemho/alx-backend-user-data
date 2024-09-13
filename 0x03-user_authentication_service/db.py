@@ -31,3 +31,13 @@ class DB:
         self._session.commit()
         # Commit the transaction to save to the database
         return new_user  # Return the newly created User object
+
+
+    def find_user_by(self, **kwargs) -> User:
+        """Find user by arbitrary keyword arguments."""
+        try:
+            return self._session.query(User).filter_by(**kwargs).first()
+        except NoResultFound:
+            raise NoResultFound
+        except InvalidRequestError:
+            raise InvalidRequestError
